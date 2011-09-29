@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 require 'test_helper'
 gem "actionpack"
 require 'action_controller'
-require 'action_controller/test_process'
+require 'action_controller/test_case'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/ugo2_helper")
 
 class Ugo2HelperTest < ActiveSupport::TestCase
