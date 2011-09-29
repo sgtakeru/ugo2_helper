@@ -1,8 +1,11 @@
-require 'uri'
+# -*- coding: utf-8 -*-
+# require 'uri'
+require 'cgi'
 
 module Ugo2Helper
   def phpurlencode(str)
-    URI.encode(str, /[^a-zA-Z\d\-\_\.]/n)
+    # URI.encode(str, /[^a-zA-Z\d\-\_\.]/n)
+    CGI.escape(str)
   end
 
   def make_ugo2_image_url(server, user, hash, title, options={})
@@ -11,7 +14,8 @@ module Ugo2Helper
     ch = options[:ch]
 
     result =  "http://#{server}/?u=#{user}&h=#{hash}&guid=ON&ut=#{ut}"
-    result += "&qM=#{phpurlencode(request.referer ? request.referer : '')}|AzR|#{request.port.to_s}|#{phpurlencode(request.host.to_s)}|#{phpurlencode(request.request_uri.to_s)}|Y|"
+    referer = request.referer && request.referer == '/' ? '' : request.referer
+    result += "&qM=#{phpurlencode(referer)}|AzR|#{request.port.to_s}|#{phpurlencode(request.host.to_s)}|#{phpurlencode(request.fullpath.to_s)}|Y|"
     result += "&ch=#{ch}"
     result += "&sb=#{phpurlencode(title)}"
 
